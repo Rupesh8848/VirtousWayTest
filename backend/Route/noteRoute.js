@@ -1,5 +1,11 @@
 const express = require("express");
-const { createNewNote, getNotes } = require("../Controller/noteController");
+const {
+  createNewNote,
+  getNotes,
+  getNote,
+  updateNote,
+  deleteNote,
+} = require("../Controller/noteController");
 const Joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});
 const noteRoute = express.Router();
@@ -10,6 +16,9 @@ const noteSchema = Joi.object({
 });
 
 noteRoute.post("/create/new", validator.body(noteSchema), createNewNote);
-noteRoute.get("/note/all", getNotes);
+noteRoute.get("/all", getNotes);
+noteRoute.get("/:noteId", getNote);
+noteRoute.put("/:noteId", updateNote);
+noteRoute.delete("/:noteId", deleteNote);
 
 module.exports = noteRoute;
